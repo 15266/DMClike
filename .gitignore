@@ -1,0 +1,11 @@
+# 发布产物（分卷 zip，走 Release 不走仓库）
+*.zip
+*.zip.*
+*.7z*
+
+# 打包产物
+*.pdb
+
+# 系统
+Thumbs.db
+desktop.ini

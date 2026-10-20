@@ -73,7 +73,29 @@ No precompiled movie scene data is present for sequence 'Sequence'.
 - 启动器 `BootstrapPackagedGame` 里硬编码了 `fdz\Binaries\Win64\fdz.exe`
 
 强行把这些也改成 `DMClike`，实测会直接弹「错误」对话框起不来。
-真正改名需要改工程源码后重新打包（需要 UE 5.6）。
+
+### 为什么没有从源码层彻底改名
+
+本机装了 UE 5.6.1（`D:\ue\UE_5.6`，CL-44394996，与本包编译版本一致），
+理论上可以改名重打包。做法是 `DMClike.uproject` + `DMClike.Target.cs`
+（C++ 模块名保持 `fdz`，这样资产里引用的 `/Script/fdz.*` 不会失效）。
+
+实际试了一次，卡在编译量上：**Target 名一换，引擎模块的中间产物目录就变了**
+（`Intermediate/Build/Win64/x64/<TargetName>/`），
+于是 1000 多个引擎模块要按新目标名整个重编一遍。
+
+这台机器只有 16 GB 内存，编译时可用约 2.4 GB，UBT 因此把并行度限制成 1：
+
+```
+Requested 1.5 GB memory per action, 2.37 GB available:
+limiting max parallel actions to 1
+```
+
+1015 个动作串行执行，预计 4～6 小时。所以最终没有重编，
+改为在打包产物层改名（启动器 / 窗口标题 / 包名），这些已经是 `DMClike`。
+
+要在内存充足的机器上做彻底改名，需要的正是上面那两步文件改动。
+
 
 窗口标题、启动器名、包名已经全部是 `DMClike`。
 

@@ -2,8 +2,6 @@
 
 UE 5.6 第三人称高速动作战斗 Demo（Windows 64 位）。
 
-> 原名《代号M98》，现更名 **DMClike**。
-
 ## 下载
 
 到 [Releases](https://github.com/15266/DMClike/releases) 下载**全部**分卷文件：
